@@ -9,11 +9,13 @@ const jwt = require('jsonwebtoken')
 // 导入 config 模块
 const config = require('../src/config.js')
 
-// 注册 步骤：
-//  1.检测表单数据是否合法
-//  2.检测用户名是否被占用
-//  3.对密码进行加密处理
-//  4.插入新用户
+/*
+ 注册 步骤：
+  1.检测表单数据是否合法
+  2.检测用户名是否被占用
+  3.对密码进行加密处理
+  4.插入新用户
+*/
 exports.register = (req, res) => {
     // 接收表单数据
     const userInfo = req.body;
@@ -36,6 +38,7 @@ exports.register = (req, res) => {
     db.query('insert into ev_users set ?', [userInfo], (err, results) => {
         // 如果插入出错，则返回错误信息
         if (err) return res.cc('sql error')
+        if (results.affectedRows !== 1) return res.cc('insert error')
         // 如果插入成功，则返回成功信息
         res.send({
             status: 0,
@@ -44,11 +47,13 @@ exports.register = (req, res) => {
     })
 }
 
-// 登录 步骤：
-//  1.检测表单数据是否合法
-//  2.根据用户名查询用户的数据
-//  3.判断用户输入的密码是否正确
-//  4.生成 JWT 的 Token 字符串
+/*
+ 登录 步骤：
+  1.检测表单数据是否合法
+  2.根据用户名查询用户的数据
+  3.判断用户输入的密码是否正确
+  4.生成 JWT 的 Token 字符串
+*/
 exports.login = (req, res) => {
     // 2.根据用户名查询用户的数据
     const userInfo = req.body;
@@ -66,7 +71,7 @@ exports.login = (req, res) => {
         // 核心注意点：在生成 Token 字符串的时候，一定要剔除 密码 和 头像 的值
         const user = {...results[0], password: '', user_pic: ''}
         // 对用户信息进行加密，生成token字符串
-        const tokenStr = jwt.sign(user, config.jwtSecretKey, { expiresIn: config.expiresIn });
+        const tokenStr = jwt.sign(user, config.jwtSecretKey, {expiresIn: config.expiresIn});
         //把生成的token字符串返回客户端
         res.send({
             status: 0,

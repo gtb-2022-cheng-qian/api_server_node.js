@@ -4,5 +4,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="@types/jsonwebtoken" level="application" />
+    <orderEntry type="library" name="@types/bcryptjs" level="application" />
+    <orderEntry type="library" name="@types/mysql" level="application" />
   </component>
 </module>

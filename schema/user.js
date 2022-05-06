@@ -38,7 +38,7 @@ exports.reg_login_schema = {
 }
 
 // 导出更新表单的验证规则对象
-exports.update_schema={
+exports.update_schema = {
     body: {
         id: idSchema,
         nickname: nicknameSchema,
@@ -48,7 +48,7 @@ exports.update_schema={
 
 // 导出更新密码表单的验证规则对象
 // 核心验证思路：旧密码与新密码，必须符合密码的验证规则，并且新密码不能与旧密码一致！
-exports.updatePwd_schema={
+exports.updatePwd_schema = {
     body: {
         // 使用 password 这个规则，验证 req.body.oldPwd 的值
         oldPwd: passwordSchema,
@@ -62,7 +62,7 @@ exports.updatePwd_schema={
 }
 
 // 导出更新头像表单的验证规则对象
-exports.updateAvatar_schema={
+exports.updateAvatar_schema = {
     body: {
         avatar: avatarSchema
     }

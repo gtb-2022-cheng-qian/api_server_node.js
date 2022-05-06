@@ -1,6 +1,5 @@
 // 导入数据库模块
 const db = require('../db/index.js');
-
 // 导入加密模块
 const bcrypt = require('bcryptjs');
 
@@ -12,6 +11,7 @@ exports.getUserInfo = (req, res) => {
         if (results.length !== 1) return res.cc('query error');
         res.send({
             status: 0,
+            message: 'get user information success',
             data: results[0]
         })
     })
@@ -19,12 +19,12 @@ exports.getUserInfo = (req, res) => {
 
 // 更新用户基本信息的处理函数
 exports.updateUserInfo = (req, res) => {
-    db.query('update ev_users set ? where id=?', [req.body, req.body.id], (err, results) => {
+    db.query('update ev_users set ? where id=?', [req.body, req.user.id], (err, results) => {
         if (err) return res.cc('sql error')
         if (results.affectedRows !== 1) return res.cc('update user info error')
         res.send({
             status: 0,
-            msg: 'updating succeed'
+            message: 'updating succeed'
         })
     })
 }
@@ -34,16 +34,18 @@ exports.updatePwd = (req, res) => {
     db.query('select * from ev_users where id=?', [req.user.id], (err, results) => {
         if (err) return res.cc('sql error')
         if (results.length !== 1) return res.cc('query error')
+        // 校验旧密码是否正确
         const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password);
         if (!compareResult) return res.cc('old password error')
     })
+    // 更新密码
     const newPwd = bcrypt.hashSync(req.body.newPwd, 10);
     db.query('update ev_users set password=? where id=?', [newPwd, req.user.id], (err, results) => {
         if (err) return res.cc('sql error')
         if (results.affectedRows !== 1) return res.cc('update error')
         res.send({
             status: 0,
-            msg: 'resetting succeed'
+            message: 'resetting succeed'
         })
     })
 }
@@ -55,7 +57,7 @@ exports.updateAvatar = (req, res) => {
         if (results.affectedRows !== 1) return res.cc('update avatar error')
         res.send({
             status: 0,
-            msg: 'updating avatar succeed'
+            message: 'updating avatar succeed'
         })
     })
 }

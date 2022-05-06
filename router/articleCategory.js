@@ -1,10 +1,14 @@
 const express = require('express');
-const router = express.Router();
-
 const articleCategoryHandler = require('../router_handler/articleCategory.js');
-
 const expressJoi = require('@escook/express-joi');
-const {add_articleCategory_schema, delete_articleCategoryById_schema, get_articleCategoryById_schema, update_articleCategoryById_schema}=require('../schema/article.js');
+const {
+    add_articleCategory_schema,
+    delete_articleCategoryById_schema,
+    get_articleCategoryById_schema,
+    update_articleCategoryById_schema
+} = require('../schema/article.js');
+
+const router = express.Router();
 
 // 获取所有文章分类
 router.get('/category', articleCategoryHandler.getArticleCategory);
