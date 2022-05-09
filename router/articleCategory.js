@@ -6,7 +6,7 @@ const {
     delete_articleCategoryById_schema,
     get_articleCategoryById_schema,
     update_articleCategoryById_schema
-} = require('../schema/article.js');
+} = require('../schema/articleCategory.js');
 
 const router = express.Router();
 

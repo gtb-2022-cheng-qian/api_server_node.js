@@ -1,7 +1,13 @@
 const express = require('express');
 const articleHandler = require('../router_handler/article.js');
 const expressJoi = require('@escook/express-joi');
-const {add_article_schema} = require('../schema/article.js');
+const {
+    add_article_schema,
+    get_articles_schema,
+    delete_article_schema,
+    get_articlesById_schema,
+    edit_article_schema
+} = require('../schema/article.js');
 // 注意：使用 express.urlencoded() 中间件无法解析 multipart/form-data 格式的请求体数据。
 // 当前项目，推荐使用 multer 来解析 multipart/form-data 格式的表单数据。
 const multer = require('multer');
@@ -18,5 +24,13 @@ const upload = multer({dest: path.join(__dirname, '../uploads')})
  将文本类型的数据，解析并挂载到 req.body 属性中
 */
 router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), articleHandler.addArticle)
+
+router.get('/list', expressJoi(get_articles_schema), articleHandler.getArticleList)
+
+router.get('/delete/:id', expressJoi(delete_article_schema), articleHandler.deleteArticle)
+
+router.get('/detail/:id', expressJoi(get_articlesById_schema), articleHandler.getArticleById)
+
+router.post('/edit', upload.single('cover_img'), expressJoi(edit_article_schema), articleHandler.editArticle)
 
 module.exports = router;
