@@ -2,7 +2,7 @@ const joi = require('joi');
 
 const nameSchema = joi.string().min(1).max(50).required();
 const aliasSchema = joi.string().min(1).max(50).required();
-const idSchema = joi.number().integer().min(1).required();
+const idSchema = joi.string().min(1).required();
 
 exports.add_articleCategory_schema = {
     body: {
@@ -25,7 +25,7 @@ exports.get_articleCategoryById_schema = {
 
 exports.update_articleCategoryById_schema = {
     body: {
-        id: idSchema,
+        id: joi.number().integer().min(1).required(),
         name: nameSchema,
         alias: aliasSchema
     }

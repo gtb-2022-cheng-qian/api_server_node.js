@@ -9,7 +9,7 @@ const stateSchema = joi.string().valid('published', 'draft').required();
 const pageNumSchema = joi.number().integer().min(1).required();
 const pageSizeSchema = joi.number().integer().min(1).required();
 
-const idSchema = joi.number().integer().min(1).required()
+const idSchema = joi.string().min(1).required()
 
 exports.add_article_schema = {
     body: {
@@ -43,7 +43,7 @@ exports.get_articlesById_schema = {
 
 exports.edit_article_schema = {
     body: {
-        id: idSchema,
+        id: joi.number().integer().min(1).required(),
         title: titleSchema,
         cate_id: cate_idSchema,
         content: contentSchema,
