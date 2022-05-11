@@ -1,52 +1,43 @@
 // 导入数据库模块
-const db = require('../../../db');
+const db = require('../../../db')
 // 导入加密模块
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs')
+const userInfo = require('../repository/userInfo.js')
 
 // 获取用户基本信息的处理函数
-exports.getUserInfo = (req, res) => {
-    // 注意：req 对象上的 user 属性，是 Token 解析成功，express-jwt 中间件帮我们挂载上去的
-    db.query('SELECT id, username, nickname, email, user_pic FROM ev_users WHERE id=?', [req.user.id], (err, results) => {
-        if (err) return res.cc('sql error');
-        if (results.length !== 1) return res.cc('query error');
-        res.send({
-            status: 0,
-            message: 'get user information success',
-            data: results[0]
-        })
+exports.getUserInfo = async (req, res) => {
+    const result = await userInfo.getBasicUserInfo(req, res)
+
+    res.send({
+        status: 0,
+        message: 'get user information success',
+        data: result
     })
 }
 
 // 更新用户基本信息的处理函数
 exports.updateUserInfo = (req, res) => {
-    db.query('update ev_users set ? where id=?', [req.body, req.user.id], (err, results) => {
-        if (err) return res.cc('sql error')
-        if (results.affectedRows !== 1) return res.cc('update user info error')
-        res.send({
-            status: 0,
-            message: 'updating succeed'
-        })
+    userInfo.updateUserInfoById(req, res)
+    res.send({
+        status: 0,
+        message: 'updating succeed'
     })
 }
 
 // 重置密码的处理函数
-exports.updatePwd = (req, res) => {
-    db.query('select * from ev_users where id=?', [req.user.id], (err, results) => {
-        if (err) return res.cc('sql error')
-        if (results.length !== 1) return res.cc('query error')
-        // 校验旧密码是否正确
-        const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password);
-        if (!compareResult) return res.cc('old password error')
-    })
+exports.updatePwd = async (req, res) => {
+    const result = await userInfo.getPassword(req, res)
+
+    // 校验旧密码是否正确
+    const compareResult = bcrypt.compareSync(req.body.oldPwd, result.password)
+    if (!compareResult) return res.cc('old password error')
+
     // 更新密码
-    const newPwd = bcrypt.hashSync(req.body.newPwd, 10);
-    db.query('update ev_users set password=? where id=?', [newPwd, req.user.id], (err, results) => {
-        if (err) return res.cc('sql error')
-        if (results.affectedRows !== 1) return res.cc('update error')
-        res.send({
-            status: 0,
-            message: 'resetting succeed'
-        })
+    req.body.newPwd = bcrypt.hashSync(req.body.newPwd, 10)
+    userInfo.updatePassword(req, res)
+    res.send({
+        status: 0,
+        message: 'resetting succeed'
     })
 }
 

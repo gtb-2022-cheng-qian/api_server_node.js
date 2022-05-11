@@ -19,7 +19,7 @@ exports.addUser = (req, res) => {
 }
 
 exports.getUserInfoByUsername = (req, res) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         db.query('select * from ev_users where username=?', [req.body.username], (err, results) => {
             if (err) return res.cc('sql error')
             if (results.length !== 1) return res.cc('username error')
