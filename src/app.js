@@ -8,11 +8,11 @@ const config = require('./config.js')
 // 导入解析token的模块
 const expressJwt = require('express-jwt')
 // 导入用户路由模块
-const userRouter = require('../router/userRegAndLog.js')
+const userRouter = require('./router/userRegAndLog.js')
 // 导入用户信息路由模块
-const userinfoRouter = require('../router/userInfo')
-const articleCategoryRouter = require('../router/articleCategory')
-const articleRouter = require('../router/article')
+const userinfoRouter = require('./router/userInfo')
+const articleCategoryRouter = require('./router/articleCategory')
+const articleRouter = require('./router/article')
 
 // 创建 express 的服务器实例
 const app = express()

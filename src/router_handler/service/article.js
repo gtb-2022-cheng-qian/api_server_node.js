@@ -1,5 +1,5 @@
 const path = require('path');
-const db = require('../db/index.js');
+const db = require('../../../db');
 
 exports.addArticle = (req, res) => {
     // 手动判断是否上传了文章封面

@@ -1,5 +1,5 @@
 const express = require('express');
-const articleCategoryHandler = require('../router_handler/articleCategory.js');
+const articleCategoryHandler = require('../router_handler/service/articleCategory.js');
 const expressJoi = require('@escook/express-joi');
 const {
     add_articleCategory_schema,

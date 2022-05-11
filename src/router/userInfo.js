@@ -1,6 +1,6 @@
 const express = require('express')
 //导入用户信息处理函数模块
-const userInfoHandler = require('../router_handler/userInfo')
+const userInfoHandler = require('../router_handler/service/userInfo')
 // 导入验证数据合法性中间件
 const expressJoi = require('@escook/express-joi')
 // 导入所需验证规则对象

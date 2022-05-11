@@ -1,4 +1,4 @@
-const db = require('../db/index.js');
+const db = require('../../../db');
 
 exports.getArticleCategory = (req, res) => {
     db.query('select * from ev_article_cate where is_deleted=0 order by id asc', (err, results) => {
