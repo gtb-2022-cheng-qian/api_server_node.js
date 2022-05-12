@@ -1,50 +1,70 @@
 // 导入加密模块
 const bcrypt = require('bcryptjs')
-const userInfo = require('../repository/userInfo.js')
+const repo = require('../repository/userInfo.js')
 
 // 获取用户基本信息的处理函数
-exports.getUserInfo = async (req, res) => {
-    const result = await userInfo.getBasicUserInfo(req, res)
-
-    res.send({
-        status: 0,
-        message: 'get user information success',
-        data: result
+const getBasicUserInfo = (req) => {
+    return new Promise((resolve, reject) => {
+        repo.getUserInfoById(req.user.id)
+            .then(results => {
+                if (results.length !== 1) return reject('query error')
+                resolve(results[0]);
+            })
+            .catch(err => reject(err))
     })
 }
 
 // 更新用户基本信息的处理函数
-exports.updateUserInfo = (req, res) => {
-    userInfo.updateUserInfoById(req, res)
-
-    res.send({
-        status: 0,
-        message: 'updating succeed'
+const updateBasicUserInfo = (req) => {
+    return new Promise((resolve, reject) => {
+        repo.updateUserInfoById(req.body, req.user.id)
+            .then(results => {
+                if (results.affectedRows !== 1) return reject('update user info error')
+                resolve(results);
+            })
+            .catch(err => reject(err))
     })
 }
 
 // 重置密码的处理函数
-exports.updatePwd = async (req, res) => {
-    const result = await userInfo.getPassword(req, res)
-    // 校验旧密码是否正确
-    const compareResult = bcrypt.compareSync(req.body.oldPwd, result.password)
-    if (!compareResult) return res.cc('old password error')
-    // 更新密码
-    req.body.newPwd = bcrypt.hashSync(req.body.newPwd, 10)
-    userInfo.updatePassword(req, res)
+const resetPassword = async (req, res) => {
+    return new Promise((resolve, reject) => {
+        repo.getPasswordById(req.user.id)
+            .then(results => {
+                if (results.length !== 1) return reject('password query error');
+                // 校验旧密码是否正确
+                const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password)
+                if (!compareResult) return reject('old password error')
+            })
+            .catch(err => reject(err))
 
-    res.send({
-        status: 0,
-        message: 'resetting succeed'
+        // 更新密码
+        req.body.newPwd = bcrypt.hashSync(req.body.newPwd, 10)
+        repo.updatePasswordById(req.body.newPwd, req.user.id)
+            .then(results => {
+                if (results.affectedRows !== 1) return res.cc('update password error')
+                resolve(results);
+            })
+            .catch(err => reject(err))
+
     })
 }
 
 // 更新用户头像的处理函数
-exports.updateAvatar = (req, res) => {
-    userInfo.updateAvatar(req, res)
-
-    res.send({
-        status: 0,
-        message: 'updating avatar succeed'
+const resetAvatar = (req, res) => {
+    return new Promise((resolve, reject) => {
+        repo.updateAvatarById(req.body.avatar, req.user.id)
+            .then(results => {
+                if (results.affectedRows !== 1) return res.cc('update avatar error')
+                resolve(results);
+            })
+            .catch(err => reject(err))
     })
+}
+
+module.exports = {
+    getBasicUserInfo,
+    updateBasicUserInfo,
+    resetPassword,
+    resetAvatar
 }
