@@ -1,50 +1,66 @@
-const articleCategory = require('../repository/articleCategory.js');
+const repo = require('../repository/articleCategory.js');
 
-exports.getArticleCategory = async (req, res) => {
-    const results = await articleCategory.getCategoryList(req, res);
-
-    res.send({
-        status: 0,
-        message: 'query success',
-        data: results
+exports.getCategoryList = () => {
+    return new Promise((resolve, reject) => {
+        repo.getAllCategories()
+            .then(results => {
+                resolve(results)
+            })
+            .catch(err => reject(err))
     })
 };
 
-exports.postArticleCategory = (req, res) => {
-    articleCategory.getCategoryByNameOrAlias(req, res)
-    articleCategory.addCategory(req, res)
+exports.addArticleCategory = (req) => {
+    return new Promise((resolve, reject) => {
+        repo.getCategoryByNameOrAlias(req.body.name, req.body.alias)
+            .then(results => {
+                if (results.length > 0) return reject('category name or alias already exists');
+            })
+            .catch(err => reject(err))
 
-    res.send({
-        status: 0,
-        message: 'insert success',
+        repo.insertCategory(req.body)
+            .then(results => {
+                if (results.affectedRows !== 1) return reject('insert failed');
+                resolve(results)
+            })
+            .catch(err => reject(err))
     })
 }
 
-exports.deleteArticleCategoryById = (req, res) => {
-    articleCategory.markCategoryDeleted(req, res)
-
-    res.send({
-        status: 0,
-        message: 'delete success',
+exports.deleteArticleCategory = (req) => {
+    return new Promise((resolve, reject) => {
+        repo.markCategoryDeletedById(req.params.id)
+            .then(results => {
+                if (results.affectedRows !== 1) return reject('delete failed')
+                resolve(results)
+            })
+            .catch(err => reject(err))
     })
 }
 
-exports.getArticleCategoryById = async (req, res) => {
-    const result = await articleCategory.getCategoryById(req, res);
-
-    res.send({
-        status: 0,
-        message: 'query success',
-        data: result
+exports.getArticleCategory = (req) => {
+    return new Promise((resolve, reject) => {
+        repo.getCategoryById(req.params.id)
+            .then(results => {
+                if (results.length !== 1) return reject('category query error');
+                resolve(results[0])
+            })
+            .catch(err => reject(err))
     })
 }
 
-exports.updateArticleCategoryById = (req, res) => {
-    articleCategory.getCategoryByNameOrAliasExceptId(req, res)
-    articleCategory.updateCategoryById(req, res)
-
-    res.send({
-        status: 0,
-        message: 'update success',
+exports.updateArticleCategory = (req) => {
+    return new Promise((resolve, reject) => {
+        repo.getCategoryByNameOrAliasExceptId(req.body.id, req.body.name, req.body.alias)
+            .then(results => {
+                if (results.length > 0) return reject('category name or alias already exists');
+            })
+            .catch(err => reject(err))
+        repo.updateCategoryById(req.body, req.body.id)
+            .then(results => {
+                if (results.affectedRows !== 1) return reject('update failed');
+                resolve(results)
+            })
+            .catch(err => reject(err))
     })
 }

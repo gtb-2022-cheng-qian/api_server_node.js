@@ -1,54 +1,74 @@
 const db = require("../../../db/index.js");
-exports.getCategoryList = (req, res) => {
-    return new Promise((resolve) => {
+
+const getAllCategories = () => {
+    return new Promise((resolve, reject) => {
         db.query('select * from ev_article_cate where is_deleted=0 order by id asc', (err, results) => {
-            if (err) return res.cc('sql error');
+            if (err) return reject('sql error');
             resolve(results);
         })
     })
 }
 
-exports.getCategoryByNameOrAlias = (req, res) => {
-    db.query('select * from ev_article_cate where name=? or alias=?', [req.body.name, req.body.alias], (err, results) => {
-        if (err) return res.cc('sql error');
-        if (results.length > 0) return res.cc('category name or alias already exists');
+const getCategoryByNameOrAlias = (name, alias) => {
+    return new Promise((resolve, reject) => {
+        db.query('select * from ev_article_cate where name=? or alias=?', [name, alias], (err, results) => {
+            if (err) return reject('sql error');
+            resolve(results);
+        })
     })
 }
 
-exports.addCategory = (req, res) => {
-    db.query('insert into ev_article_cate set ?', [req.body], (err, results) => {
-        if (err) return res.cc('sql error');
-        if (results.affectedRows !== 1) return res.cc('insert failed');
+const insertCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        db.query('insert into ev_article_cate set ?', [category], (err, results) => {
+            if (err) return reject('sql error');
+            resolve(results);
+        })
     })
 }
 
-exports.markCategoryDeleted = (req, res) => {
-    db.query('update ev_article_cate set is_deleted=1 where id=?', [req.params.id], (err, results) => {
-        if (err) return res.cc('sql error');
-        if (results.affectedRows !== 1) return res.cc('delete failed');
+const markCategoryDeletedById = (id) => {
+    return new Promise((resolve, reject) => {
+        db.query('update ev_article_cate set is_deleted=1 where id=?', [id], (err, results) => {
+            if (err) return reject('sql error');
+            resolve(results);
+        })
     })
 }
 
-exports.getCategoryById = (req, res) => {
-    return new Promise((resolve) => {
-        db.query('select * from ev_article_cate where id=?', [req.params.id], (err, results) => {
-            if (err) return res.cc('sql error');
-            if (results.length !== 1) return res.cc('category query error');
+const getCategoryById = (id) => {
+    return new Promise((resolve, reject) => {
+        db.query('select * from ev_article_cate where id=?', [id], (err, results) => {
+            if (err) return reject('sql error');
             resolve(results[0]);
         })
     })
 }
 
-exports.getCategoryByNameOrAliasExceptId = (req, res) => {
-    db.query('select * from ev_article_cate where id<>? and (name=? or alias=?)', [req.body.id, req.body.name, req.body.alias], (err, results) => {
-        if (err) return res.cc('sql error');
-        if (results.length > 0) return res.cc('category name or alias already exists');
+const getCategoryByNameOrAliasExceptId = (id, name, alias) => {
+    return new Promise((resolve, reject) => {
+        db.query('select * from ev_article_cate where id<>? and (name=? or alias=?)', [id, name, alias], (err, results) => {
+            if (err) return reject('sql error');
+            resolve(results);
+        })
     })
 }
 
-exports.updateCategoryById= (req, res) => {
-    db.query('update ev_article_cate set ? where id=?', [req.body, req.body.id], (err, results) => {
-        if (err) return res.cc('sql error');
-        if (results.affectedRows !== 1) return res.cc('update failed');
+const updateCategoryById = (category, id) => {
+    return new Promise((resolve, reject) => {
+        db.query('update ev_article_cate set ? where id=?', [category, id], (err, results) => {
+            if (err) return reject('sql error');
+            resolve(results);
+        })
     })
+}
+
+module.exports = {
+    getAllCategories,
+    getCategoryByNameOrAlias,
+    insertCategory,
+    markCategoryDeletedById,
+    getCategoryById,
+    getCategoryByNameOrAliasExceptId,
+    updateCategoryById
 }
