@@ -1,48 +1,23 @@
-const db = require("../../../db/index.js")
+const {getPromise} = require('./promise.js');
 
 const insertArticle = (articleInfo) => {
-    return new Promise((resolve, reject) => {
-        db.query('insert into ev_articles set ?', [articleInfo], (err, results) => {
-            if (err) return reject('sql error')
-            resolve(results)
-        })
-    })
+    return getPromise('insert into ev_articles set ?', [articleInfo])
 }
 
 const getArticleListByPage = (sql, value) => {
-    return new Promise((resolve, reject) => {
-        db.query(sql, value, (err, results) => {
-            if (err) return reject ('sql error')
-            resolve(results)
-        })
-    })
+    return getPromise(sql, value)
 }
 
 const markArticleAsDeletedById = (id) => {
-    return new Promise((resolve, reject) => {
-        db.query('update ev_articles set is_deleted=1 where id=?', [id], (err, results) => {
-            if (err) return reject('sql error')
-            resolve(results)
-        })
-    })
+    return getPromise('update ev_articles set is_deleted = 1 where id = ?', [id])
 }
 
-const getArticleById= (id) => {
-    return new Promise((resolve, reject) => {
-        db.query('select * from ev_articles where id=?', [id], (err, results) => {
-            if (err) return reject('sql error')
-            resolve(results)
-        })
-    })
+const getArticleById = (id) => {
+    return getPromise('select * from ev_articles where id = ?', [id])
 }
 
 const updateArticleById = (articleInfo, id) => {
-    return new Promise((resolve, reject) => {
-        db.query('update ev_articles set ? where id=?', [articleInfo, id], (err, results) => {
-            if (err) return reject('sql error')
-            resolve(results)
-        })
-    })
+    return getPromise('update ev_articles set ? where id = ?', [articleInfo, id])
 }
 
 module.exports = {
