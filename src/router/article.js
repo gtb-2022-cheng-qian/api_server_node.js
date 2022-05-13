@@ -1,5 +1,5 @@
 const express = require('express');
-const articleHandler = require('../router_handler/service/article.js');
+const articleController = require('../router_handler/controller/article.js');
 const expressJoi = require('@escook/express-joi');
 const {
     add_article_schema,
@@ -23,14 +23,14 @@ const upload = multer({dest: path.join(__dirname, '../uploads')})
  将文件类型的数据，解析并挂载到 req.file 属性中
  将文本类型的数据，解析并挂载到 req.body 属性中
 */
-router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), articleHandler.addArticle)
+router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), articleController.addArticle)
 
-router.get('/list', expressJoi(get_articles_schema), articleHandler.getArticleList)
+router.get('/list', expressJoi(get_articles_schema), articleController.getArticleList)
 
-router.get('/delete/:id', expressJoi(delete_article_schema), articleHandler.deleteArticle)
+router.get('/delete/:id', expressJoi(delete_article_schema), articleController.deleteArticle)
 
-router.get('/detail/:id', expressJoi(get_articlesById_schema), articleHandler.getArticleById)
+router.get('/detail/:id', expressJoi(get_articlesById_schema), articleController.getSingleArticle)
 
-router.post('/edit', upload.single('cover_img'), expressJoi(edit_article_schema), articleHandler.editArticle)
+router.post('/edit', upload.single('cover_img'), expressJoi(edit_article_schema), articleController.editArticle)
 
 module.exports = router;

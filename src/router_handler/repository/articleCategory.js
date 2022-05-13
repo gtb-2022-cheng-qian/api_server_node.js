@@ -40,7 +40,7 @@ const getCategoryById = (id) => {
     return new Promise((resolve, reject) => {
         db.query('select * from ev_article_cate where id=?', [id], (err, results) => {
             if (err) return reject('sql error');
-            resolve(results[0]);
+            resolve(results);
         })
     })
 }
