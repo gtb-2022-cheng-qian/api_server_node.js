@@ -1,4 +1,4 @@
-const {getPromise} = require('./promise.js');
+const {getPromise} = require('../utils/promise.js');
 
 const getAllCategories = () => {
     return getPromise('select * from ev_article_cate where is_deleted=0 order by id asc')

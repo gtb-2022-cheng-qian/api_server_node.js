@@ -1,4 +1,4 @@
-const {getPromise} = require('./promise.js');
+const {getPromise} = require('../utils/promise.js');
 
 const insertArticle = (articleInfo) => {
     return getPromise('insert into ev_articles set ?', [articleInfo])

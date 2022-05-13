@@ -1,4 +1,4 @@
-const {getPromise} = require('./promise.js');
+const {getPromise} = require('../utils/promise.js');
 
 const getUserInfoById = (id) => {
     return getPromise('select id, username, nickname, email, user_pic from ev_users where id=?', [id])

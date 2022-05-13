@@ -1,4 +1,4 @@
-const {getPromise} = require('./promise.js');
+const {getPromise} = require('../utils/promise.js');
 
 const getUserInfoByUsername = (username) => {
     return getPromise('select * from ev_users where username=?', [username])
