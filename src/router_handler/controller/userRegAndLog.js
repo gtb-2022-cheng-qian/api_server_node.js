@@ -2,13 +2,11 @@ const service = require('../service/userRegAndLog.js')
 
 exports.register = (req, res) => {
     service.clientRegister(req)
-        .then((results) => {
-            if (results.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'register success'
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'register success'
+            })
         })
         .catch(err => res.cc(err))
 }

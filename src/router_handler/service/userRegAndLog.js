@@ -51,13 +51,13 @@ const clientLogin = (req) => {
         // 2.根据用户名查询用户的数据
         repo.getUserInfoByUsername(req.body.username)
             .then(results => {
-                if (results.length !== 1) return reject('username error')
+                if (results.length !== 1) return reject('username or password error')
 
                 // 3.判断用户输入的密码是否正确
                 // 核心实现思路：调用 bcrypt.compareSync(用户提交的密码, 数据库中的密码) 方法比较密码是否一致
                 // 返回值是布尔值（true 一致、false 不一致）
                 const compareResult = bcrypt.compareSync(req.body.password, results[0].password)
-                if (!compareResult) return reject('password error')
+                if (!compareResult) return reject('username or password error')
 
                 // 4.生成 JWT 的 Token 字符串
                 // 核心注意点：在生成 Token 字符串的时候，一定要剔除 密码 和 头像 的值

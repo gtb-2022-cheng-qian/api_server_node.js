@@ -14,26 +14,22 @@ exports.getArticleCategory = (req, res) => {
 
 exports.postArticleCategory = (req, res) => {
     service.addArticleCategory(req)
-        .then(results => {
-            if (results.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'insert success',
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'insert success',
+            })
         })
         .catch(err => res.cc(err));
 }
 
 exports.deleteArticleCategoryById = (req, res) => {
     service.deleteArticleCategory(req)
-        .then(results => {
-            if (results.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'delete success',
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'delete success',
+            })
         })
         .catch(err => res.cc(err));
 }
@@ -52,13 +48,11 @@ exports.getArticleCategoryById = (req, res) => {
 
 exports.updateArticleCategoryById = (req, res) => {
     service.updateArticleCategory(req)
-        .then(result => {
-            if (result.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'update success',
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'update success',
+            })
         })
         .catch(err => res.cc(err))
 }

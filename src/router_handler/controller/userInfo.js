@@ -15,13 +15,11 @@ exports.getUserInfo = (req, res) => {
 // 更新用户基本信息的处理函数
 exports.updateUserInfo = (req, res) => {
     service.updateBasicUserInfo(req)
-        .then(results => {
-            if (results.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'updating succeed'
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'updating succeed'
+            })
         })
         .catch(err => res.cc(err))
 }
@@ -29,13 +27,11 @@ exports.updateUserInfo = (req, res) => {
 // 重置密码的处理函数
 exports.updatePwd = (req, res) => {
     service.resetPassword(req)
-        .then(results => {
-            if (results.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'resetting succeed'
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'resetting succeed'
+            })
         })
         .catch(err => res.cc(err))
 }
@@ -43,13 +39,11 @@ exports.updatePwd = (req, res) => {
 // 更新用户头像的处理函数
 exports.updateAvatar = (req, res) => {
     service.resetAvatar(req)
-        .then(results => {
-            if (results.affectedRows === 1) {
-                res.send({
-                    status: 0,
-                    message: 'updating avatar succeed'
-                })
-            }
+        .then(() => {
+            res.send({
+                status: 0,
+                message: 'updating avatar succeed'
+            })
         })
         .catch(err => res.cc(err))
 }
