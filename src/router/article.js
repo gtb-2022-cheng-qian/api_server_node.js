@@ -1,5 +1,5 @@
 const express = require('express');
-const articleController = require('../router_handler/controller/article.js');
+const articleController = require('../controller/article.js');
 const expressJoi = require('@escook/express-joi');
 const {
     add_article_schema,

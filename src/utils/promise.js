@@ -1,4 +1,4 @@
-const db = require("../../../db/index.js");
+const db = require("../../db");
 
 exports.getPromise = (sql, value) => {
     return new Promise((resolve, reject) => {

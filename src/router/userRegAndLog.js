@@ -2,7 +2,7 @@
 
 const express = require('express');
 // 导入用户路由处理函数
-const userController = require('../router_handler/controller/userRegAndLog.js');
+const userController = require('../controller/userRegAndLog.js');
 // 导入验证表单数据的中间件
 const expressJoi = require('@escook/express-joi')
 // 导入验证规则对象
