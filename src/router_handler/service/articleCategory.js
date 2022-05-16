@@ -1,6 +1,6 @@
 const repo = require('../repository/articleCategory.js');
 
-exports.getCategoryList = () => {
+const getCategoryList = () => {
     return new Promise((resolve, reject) => {
         repo.getAllCategories()
             .then(results => {
@@ -10,7 +10,7 @@ exports.getCategoryList = () => {
     })
 };
 
-exports.addArticleCategory = (req) => {
+const addArticleCategory = (req) => {
     return new Promise((resolve, reject) => {
         repo.getCategoryByNameOrAlias(req.body.name, req.body.alias)
             .then(results => {
@@ -27,7 +27,7 @@ exports.addArticleCategory = (req) => {
     })
 }
 
-exports.deleteArticleCategory = (req) => {
+const deleteArticleCategory = (req) => {
     return new Promise((resolve, reject) => {
         repo.markCategoryDeletedById(req.params.id)
             .then(results => {
@@ -38,7 +38,7 @@ exports.deleteArticleCategory = (req) => {
     })
 }
 
-exports.getArticleCategory = (req) => {
+const getArticleCategory = (req) => {
     return new Promise((resolve, reject) => {
         repo.getCategoryById(req.params.id)
             .then(results => {
@@ -49,7 +49,7 @@ exports.getArticleCategory = (req) => {
     })
 }
 
-exports.updateArticleCategory = (req) => {
+const updateArticleCategory = (req) => {
     return new Promise((resolve, reject) => {
         repo.getCategoryByNameOrAliasExceptId(req.body.id, req.body.name, req.body.alias)
             .then(results => {
@@ -63,4 +63,12 @@ exports.updateArticleCategory = (req) => {
             })
             .catch(err => reject(err))
     })
+}
+
+module.exports = {
+    getCategoryList,
+    addArticleCategory,
+    deleteArticleCategory,
+    getArticleCategory,
+    updateArticleCategory
 }
