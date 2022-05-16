@@ -1,6 +1,6 @@
-const db = require("../../db");
+import db from "../../db/index.js";
 
-exports.getPromise = (sql, value) => {
+const getPromise = (sql, value) => {
     return new Promise((resolve, reject) => {
         db.query(sql, value, (err, results) => {
             if (err) return reject('sql error')
@@ -8,3 +8,5 @@ exports.getPromise = (sql, value) => {
         })
     })
 }
+
+export default getPromise

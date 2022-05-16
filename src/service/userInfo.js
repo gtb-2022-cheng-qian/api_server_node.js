@@ -1,6 +1,6 @@
 // 导入加密模块
-const bcrypt = require('bcryptjs')
-const repo = require('../repository/userInfo.js')
+import bcrypt from "bcryptjs"
+import repo from "../repository/userInfo.js"
 
 // 获取用户基本信息的处理函数
 const getBasicUserInfo = (req) => {
@@ -62,7 +62,7 @@ const resetAvatar = (req, res) => {
     })
 }
 
-module.exports = {
+export default {
     getBasicUserInfo,
     updateBasicUserInfo,
     resetPassword,

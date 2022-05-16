@@ -1,10 +1,10 @@
-const express = require('express')
-//导入用户信息处理函数模块
-const userInfoController = require('../controller/userInfo')
+import express from "express"
 // 导入验证数据合法性中间件
-const expressJoi = require('@escook/express-joi')
+import expressJoi from "@escook/express-joi"
 // 导入所需验证规则对象
-const {update_schema, updatePwd_schema, updateAvatar_schema} = require('../schema/user')
+import {update_schema, updatePwd_schema, updateAvatar_schema} from "../schema/user.js"
+//导入用户信息处理函数模块
+import userInfoController from "../controller/userInfo.js"
 
 const router = express.Router()
 
@@ -20,4 +20,4 @@ router.post('/update/pwd', expressJoi(updatePwd_schema), userInfoController.upda
 // 更新用户头像
 router.post('/update/avatar', expressJoi(updateAvatar_schema), userInfoController.updateAvatar)
 
-module.exports = router
+export default router

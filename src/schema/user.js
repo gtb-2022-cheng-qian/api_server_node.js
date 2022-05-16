@@ -3,7 +3,7 @@
 // 安装 joi 包，为表单中携带的每个数据项，定义验证规则
 // 安装 @escook/express-joi 中间件，来实现自动对表单数据进行验证的功能
 
-const joi = require('joi');
+import joi from "joi"
 /**
  * string() 值必须是字符串
  * alphanum() 值只能是包含 a-zA-Z0-9 的字符串
@@ -29,7 +29,7 @@ const emailSchema = joi.string().email().required();
 const avatarSchema = joi.string().dataUri().required();
 
 // 导出注册和登陆表单的验证规则对象
-exports.reg_login_schema = {
+export const reg_login_schema = {
     // 表示需要对req.body中的username和password进行验证
     body: {
         username: usernameSchema,
@@ -38,7 +38,7 @@ exports.reg_login_schema = {
 }
 
 // 导出更新表单的验证规则对象
-exports.update_schema = {
+export const update_schema = {
     body: {
         id: idSchema,
         nickname: nicknameSchema,
@@ -48,7 +48,7 @@ exports.update_schema = {
 
 // 导出更新密码表单的验证规则对象
 // 核心验证思路：旧密码与新密码，必须符合密码的验证规则，并且新密码不能与旧密码一致！
-exports.updatePwd_schema = {
+export const updatePwd_schema = {
     body: {
         // 使用 password 这个规则，验证 req.body.oldPwd 的值
         oldPwd: passwordSchema,
@@ -62,7 +62,7 @@ exports.updatePwd_schema = {
 }
 
 // 导出更新头像表单的验证规则对象
-exports.updateAvatar_schema = {
+export const updateAvatar_schema = {
     body: {
         avatar: avatarSchema
     }

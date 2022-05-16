@@ -1,5 +1,5 @@
-const path = require('path');
-const repo = require('../repository/article.js');
+import path from "path"
+import repo from "../repository/article.js"
 
 const addNewArticle = (req) => {
     return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ const editArticleById = (req) => {
     })
 }
 
-module.exports = {
+export default {
     addNewArticle,
     getAllArticle,
     deleteArticleById,

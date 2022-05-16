@@ -1,4 +1,4 @@
-const {getPromise} = require('../utils/promise.js');
+import getPromise from "../utils/promise.js"
 
 const insertArticle = (articleInfo) => {
     return getPromise('insert into ev_articles set ?', [articleInfo])
@@ -20,7 +20,7 @@ const updateArticleById = (articleInfo, id) => {
     return getPromise('update ev_articles set ? where id = ?', [articleInfo, id])
 }
 
-module.exports = {
+export default {
     insertArticle,
     getArticleListByPage,
     markArticleAsDeletedById,

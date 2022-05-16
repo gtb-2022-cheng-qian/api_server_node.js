@@ -1,4 +1,4 @@
-const {getPromise} = require('../utils/promise.js');
+import getPromise from "../utils/promise.js"
 
 const getAllCategories = () => {
     return getPromise('select * from ev_article_cate where is_deleted=0 order by id asc')
@@ -28,7 +28,7 @@ const updateCategoryById = (category, id) => {
     return getPromise('update ev_article_cate set ? where id=?', [category, id])
 }
 
-module.exports = {
+export default {
     getAllCategories,
     getCategoryByNameOrAlias,
     insertCategory,

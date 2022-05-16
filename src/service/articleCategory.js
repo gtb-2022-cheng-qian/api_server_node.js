@@ -1,4 +1,4 @@
-const repo = require('../repository/articleCategory.js');
+import repo from '../repository/articleCategory.js'
 
 const getCategoryList = () => {
     return new Promise((resolve, reject) => {
@@ -65,7 +65,7 @@ const updateArticleCategory = (req) => {
     })
 }
 
-module.exports = {
+export default {
     getCategoryList,
     addArticleCategory,
     deleteArticleCategory,

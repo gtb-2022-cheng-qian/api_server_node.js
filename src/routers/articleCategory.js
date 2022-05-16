@@ -1,12 +1,12 @@
-const express = require('express');
-const articleCategoryController = require('../controller/articleCategory.js');
-const expressJoi = require('@escook/express-joi');
-const {
+import express from "express"
+import expressJoi from "@escook/express-joi"
+import {
     add_articleCategory_schema,
     delete_articleCategoryById_schema,
     get_articleCategoryById_schema,
     update_articleCategoryById_schema
-} = require('../schema/articleCategory.js');
+} from "../schema/articleCategory.js"
+import articleCategoryController from "../controller/articleCategory.js"
 
 const router = express.Router();
 
@@ -25,4 +25,4 @@ router.get('/category/:id', expressJoi(get_articleCategoryById_schema), articleC
 // 根据id更新文章分类
 router.post('/category/update', expressJoi(update_articleCategoryById_schema), articleCategoryController.updateArticleCategoryById);
 
-module.exports = router;
+export default router

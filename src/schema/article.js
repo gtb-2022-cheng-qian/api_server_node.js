@@ -1,4 +1,4 @@
-const joi = require('joi');
+import joi from "joi"
 
 // 通过 express-joi 自动验证 req.body 中的文本数据；通过 if 判断手动验证 req.file 中的文件数据
 const titleSchema = joi.string().required();
@@ -11,7 +11,7 @@ const pageSizeSchema = joi.number().integer().min(1).required();
 
 const idSchema = joi.string().min(1).required()
 
-exports.add_article_schema = {
+export const add_article_schema = {
     body: {
         title: titleSchema,
         cate_id: cate_idSchema,
@@ -20,7 +20,7 @@ exports.add_article_schema = {
     }
 }
 
-exports.get_articles_schema = {
+export const get_articles_schema = {
     query: {
         pagenum: pageNumSchema,
         pagesize: pageSizeSchema,
@@ -29,19 +29,19 @@ exports.get_articles_schema = {
     }
 }
 
-exports.delete_article_schema = {
+export const delete_article_schema = {
     params: {
         id: idSchema
     }
 }
 
-exports.get_articlesById_schema = {
+export const get_articlesById_schema = {
     params: {
         id: idSchema
     }
 }
 
-exports.edit_article_schema = {
+export const edit_article_schema = {
     body: {
         id: joi.number().integer().min(1).required(),
         title: titleSchema,

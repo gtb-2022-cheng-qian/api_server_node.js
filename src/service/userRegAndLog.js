@@ -1,10 +1,10 @@
 // 导入加密模块
-const bcrypt = require('bcryptjs')
+import bcrypt from 'bcryptjs'
 // 导入 jsonwebtoken 模块
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 // 导入 config 模块
-const config = require('../../config.js')
-const repo = require('../repository/userRegAndLog.js')
+import config from '../../config.js'
+import repo from '../repository/userRegAndLog.js'
 
 /*
  注册 步骤：
@@ -70,7 +70,7 @@ const clientLogin = (req) => {
     })
 }
 
-module.exports = {
+export default {
     clientRegister,
     clientLogin
 }

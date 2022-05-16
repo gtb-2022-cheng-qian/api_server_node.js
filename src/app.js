@@ -1,17 +1,17 @@
-const express = require('express')
+import express from 'express'
 // 导入cors中间件解决跨域问题
-const cors = require('cors')
+import cors from 'cors'
 // 导入 验证规则 模块
-const joi = require('joi')
+import joi from 'joi'
 // 导入解析token的模块
-const expressJwt = require('express-jwt')
+import expressJwt from 'express-jwt'
 // 导入config模块
-const config = require('../config.js')
+import config from '../config.js'
 // 导入用户以及文章路由模块
-const userRouter = require('./router/userRegAndLog.js')
-const userinfoRouter = require('./router/userInfo')
-const articleCategoryRouter = require('./router/articleCategory')
-const articleRouter = require('./router/article')
+import userRouter from './routers/userRegAndLog.js'
+import userInfoRouter from './routers/userInfo.js'
+import articleCategoryRouter from './routers/articleCategory.js'
+import articleRouter from './routers/article.js'
 
 // 创建 express 的服务器实例
 const app = express()
@@ -27,19 +27,16 @@ app.use(expressJwt({secret: config.jwtSecretKey}).unless({path: [/^\/api\/user\/
 // 配置路由?
 app.use('/api/user', userRouter)
 // 注意：不以 /api 开头的接口，都是需要权限的接口，需要进行 Token 身份认证
-app.use('/api/my', userinfoRouter)
+app.use('/api/my', userInfoRouter)
 app.use('/api/article', articleCategoryRouter)
 app.use('/api/article', articleRouter)
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
-    console.log(err)
     // 数据验证失败
-    if (err instanceof joi.ValidationError) res.status(400).send({message: 'data validation failed'}) //throw new DataValidationException('data validation failed')
+    if (err instanceof joi.ValidationError) res.status(400).send({message: 'data validation failed'})
     // 身份认证失败
-    if (err.name === 'UnauthorizedError') res.status(401).send({message: 'identity authentication failed'})//throw new IdentityAuthenticationException('identity authentication failed')
-    // 其他错误
-    res.status(500).send({message: err})
+    if (err.name === 'UnauthorizedError') res.status(401).send({message: 'identity authentication failed'})
 })
 
 // 调用 app.listen 方法，指定端口号并启动web服务器
