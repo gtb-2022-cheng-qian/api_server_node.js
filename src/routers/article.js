@@ -13,23 +13,19 @@ import articleController from "../controller/article.js"
 import multer from "multer"
 import path from "path"
 
-const router = express.Router();
+const router = express.Router()
 // 创建 multer 的实例对象，通过 dest 属性指定文件的存放路径
 const upload = multer({dest: path.join(path.resolve(), './uploads')})
+
 /*
- 发布新文章的路由
  upload.single() 是一个局部生效的中间件，用来解析 FormData 格式的表单数据
  将文件类型的数据，解析并挂载到 req.file 属性中
  将文本类型的数据，解析并挂载到 req.body 属性中
 */
 router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), articleController.addArticle)
-
 router.get('/list', expressJoi(get_articles_schema), articleController.getArticleList)
-
 router.get('/delete/:id', expressJoi(delete_article_schema), articleController.deleteArticle)
-
 router.get('/detail/:id', expressJoi(get_articlesById_schema), articleController.getSingleArticle)
-
 router.post('/edit', upload.single('cover_img'), expressJoi(edit_article_schema), articleController.editArticle)
 
 export default router

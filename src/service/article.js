@@ -19,8 +19,7 @@ const addNewArticle = (req) => {
                 resolve(results)
             })
             .catch(err => reject(err))
-    });
-
+    })
 }
 
 const getAllArticle = (req) => {
@@ -46,9 +45,7 @@ const getAllArticle = (req) => {
         }
 
         repo.getArticleListByPage(sql, value)
-            .then(results => {
-                resolve(results)
-            })
+            .then(results => resolve(results))
             .catch(err => reject(err))
     })
 }
@@ -84,6 +81,7 @@ const editArticleById = (req) => {
             ...req.body,
             cover_img: path.join('uploads', req.file.filename),
         }
+
         repo.updateArticleById(articleInfo, req.body.id)
             .then(results => {
                 if (results.affectedRows !== 1) return reject('article edit failed')

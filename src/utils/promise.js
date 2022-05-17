@@ -1,4 +1,4 @@
-import db from "../../db/index.js";
+import db from "../../db/index.js"
 
 const getPromise = (sql, value) => {
     return new Promise((resolve, reject) => {

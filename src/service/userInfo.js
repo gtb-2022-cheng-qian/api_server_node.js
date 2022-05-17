@@ -31,7 +31,7 @@ const resetPassword = (req) => {
     return new Promise((resolve, reject) => {
         repo.getPasswordById(req.user.id)
             .then(results => {
-                if (results.length !== 1) return reject('password query error');
+                if (results.length !== 1) return reject('password query error')
                 // 校验旧密码是否正确
                 const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password)
                 if (!compareResult) return reject('old password error')
@@ -43,7 +43,7 @@ const resetPassword = (req) => {
         repo.updatePasswordById(req.body.newPwd, req.user.id)
             .then(results => {
                 if (results.affectedRows !== 1) return reject('update password error')
-                resolve(results);
+                resolve(results)
             })
             .catch(err => reject(err))
 

@@ -21,6 +21,7 @@ app.use(express.urlencoded({extended: false}))
 //只要成功配置express-jwt中间件，就可以把解析出来的用户信息挂载到req.user
 app.use(expressJwt({secret: config.jwtSecretKey}).unless({path: [/^\/api\/user\//]}))
 
+// 配置路由
 app.use('/', router)
 
 // 错误处理中间件
