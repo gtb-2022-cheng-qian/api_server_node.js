@@ -16,7 +16,7 @@ import joi from "joi"
 // 用户名的验证规则
 const usernameSchema = joi.string().alphanum().min(1).max(10).required();
 // 密码的验证规则
-const passwordSchema = joi.string().pattern(/^[\S]{6,12}$/).required();
+const passwordSchema = joi.string().pattern(/^\S{6,12}$/).required();
 // id 的验证规则
 const idSchema = joi.number().integer().min(1).required();
 // nickname 的验证规则

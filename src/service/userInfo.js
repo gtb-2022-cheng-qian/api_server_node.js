@@ -27,7 +27,7 @@ const updateBasicUserInfo = (req) => {
 }
 
 // 重置密码的处理函数
-const resetPassword = async (req, res) => {
+const resetPassword = (req) => {
     return new Promise((resolve, reject) => {
         repo.getPasswordById(req.user.id)
             .then(results => {
@@ -42,7 +42,7 @@ const resetPassword = async (req, res) => {
         req.body.newPwd = bcrypt.hashSync(req.body.newPwd, 10)
         repo.updatePasswordById(req.body.newPwd, req.user.id)
             .then(results => {
-                if (results.affectedRows !== 1) return res.cc('update password error')
+                if (results.affectedRows !== 1) return reject('update password error')
                 resolve(results);
             })
             .catch(err => reject(err))
@@ -51,11 +51,11 @@ const resetPassword = async (req, res) => {
 }
 
 // 更新用户头像的处理函数
-const resetAvatar = (req, res) => {
+const resetAvatar = (req) => {
     return new Promise((resolve, reject) => {
         repo.updateAvatarById(req.body.avatar, req.user.id)
             .then(results => {
-                if (results.affectedRows !== 1) return res.cc('update avatar error')
+                if (results.affectedRows !== 1) return reject('update avatar error')
                 resolve(results);
             })
             .catch(err => reject(err))

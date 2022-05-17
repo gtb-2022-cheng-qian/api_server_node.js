@@ -15,7 +15,7 @@ import path from "path"
 
 const router = express.Router();
 // 创建 multer 的实例对象，通过 dest 属性指定文件的存放路径
-const upload = multer({dest: path.join(path.resolve(), '../uploads')})
+const upload = multer({dest: path.join(path.resolve(), './uploads')})
 /*
  发布新文章的路由
  upload.single() 是一个局部生效的中间件，用来解析 FormData 格式的表单数据
