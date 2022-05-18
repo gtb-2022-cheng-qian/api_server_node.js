@@ -1,23 +1,23 @@
-import getPromise from "../utils/promise.js"
+import promisify from "../utils/promise.js"
 
 const insertArticle = (articleInfo) => {
-    return getPromise('insert into ev_articles set ?', [articleInfo])
+    return promisify('insert into ev_articles set ?', [articleInfo])
 }
 
 const getArticleListByPage = (sql, value) => {
-    return getPromise(sql, value)
+    return promisify(sql, value)
 }
 
 const markArticleAsDeletedById = (id) => {
-    return getPromise('update ev_articles set is_deleted = 1 where id = ?', [id])
+    return promisify('update ev_articles set is_deleted = 1 where id = ?', [id])
 }
 
 const getArticleById = (id) => {
-    return getPromise('select * from ev_articles where id = ?', [id])
+    return promisify('select * from ev_articles where id = ?', [id])
 }
 
 const updateArticleById = (articleInfo, id) => {
-    return getPromise('update ev_articles set ? where id = ?', [articleInfo, id])
+    return promisify('update ev_articles set ? where id = ?', [articleInfo, id])
 }
 
 export default {
