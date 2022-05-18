@@ -1,0 +1,13 @@
+This is the description of config file.
+
+config
+    .port: the port of the server
+    .hostname: the hostname of the server
+    .mysql: {
+        .host: the host of mysql
+        .user: the user of mysql
+        .password: the password of mysql
+        .database: the database name of mysql
+     },
+    .jwtSecretKey: the secret key of jwt token
+    .expiresIn: the expire time of jwt token
