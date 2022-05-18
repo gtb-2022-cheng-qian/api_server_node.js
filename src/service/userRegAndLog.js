@@ -20,22 +20,23 @@ const clientRegister = (req) => {
             .then((results) => {
                 // 如果查询结果不为空，则说明用户名已被占用
                 if (results.length > 0) return reject('username is already used')
+
+                // 3.对密码进行加密处理
+                //  在当前项目中，使用 bcryptjs 对用户密码进行加密，优点：
+                //  加密之后的密码，无法被逆向破解
+                //  同一明文密码多次加密，得到的加密结果各不相同，保证了安全性
+                req.body.password = bcrypt.hashSync(req.body.password, 10)
+
+                // 4.插入新用户
+                repo.insertUser(req.body)
+                    .then((results) => {
+                        if (results.affectedRows !== 1) return reject('insert error')
+                        resolve(results)
+                    })
+                    .catch(err => reject(err))
             })
             .catch(err => reject(err))
 
-        // 3.对密码进行加密处理
-        //  在当前项目中，使用 bcryptjs 对用户密码进行加密，优点：
-        //  加密之后的密码，无法被逆向破解
-        //  同一明文密码多次加密，得到的加密结果各不相同，保证了安全性
-        req.body.password = bcrypt.hashSync(req.body.password, 10)
-
-        // 4.插入新用户
-        repo.insertUser(req.body)
-            .then((results) => {
-                if (results.affectedRows !== 1) return reject('insert error')
-                resolve(results)
-            })
-            .catch(err => reject(err))
     })
 }
 

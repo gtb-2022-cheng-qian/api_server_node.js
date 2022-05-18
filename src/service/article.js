@@ -24,6 +24,7 @@ const addNewArticle = (req) => {
 
 const getAllArticle = (req) => {
     return new Promise((resolve, reject) => {
+        // change sql query + total count
         const {pagenum, pagesize, cate_id, state} = req.query
         const selectSql = 'select a.id, a.title, a.pub_date, a.state, b.name as cate_name from ev_articles a, ev_article_cate b'
         let sql = selectSql + ' where a.is_deleted=0 and a.cate_id=b.id limit ?, ?'

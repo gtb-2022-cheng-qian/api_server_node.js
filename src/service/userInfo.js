@@ -35,18 +35,16 @@ const resetPassword = (req) => {
                 // 校验旧密码是否正确
                 const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password)
                 if (!compareResult) return reject('old password error')
+                // 更新密码
+                req.body.newPwd = bcrypt.hashSync(req.body.newPwd, 10)
+                repo.updatePasswordById(req.body.newPwd, req.user.id)
+                    .then(results => {
+                        if (results.affectedRows !== 1) return reject('update password error')
+                        resolve(results)
+                    })
+                    .catch(err => reject(err))
             })
             .catch(err => reject(err))
-
-        // 更新密码
-        req.body.newPwd = bcrypt.hashSync(req.body.newPwd, 10)
-        repo.updatePasswordById(req.body.newPwd, req.user.id)
-            .then(results => {
-                if (results.affectedRows !== 1) return reject('update password error')
-                resolve(results)
-            })
-            .catch(err => reject(err))
-
     })
 }
 
