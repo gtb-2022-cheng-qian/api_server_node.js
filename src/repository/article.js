@@ -8,6 +8,10 @@ const getArticleListByPage = (sql, value) => {
     return promisify(sql, value)
 }
 
+const getArticleCountNumber = (sql, value) => {
+    return promisify(sql, value)
+}
+
 const markArticleAsDeletedById = (id) => {
     return promisify('update ev_articles set is_deleted = 1 where id = ?', [id])
 }
@@ -25,5 +29,6 @@ export default {
     getArticleListByPage,
     markArticleAsDeletedById,
     getArticleById,
-    updateArticleById
+    updateArticleById,
+    getArticleCountNumber
 }

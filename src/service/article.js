@@ -26,27 +26,39 @@ const getAllArticle = (req) => {
     return new Promise((resolve, reject) => {
         // change sql query + total count
         const {pagenum, pagesize, cate_id, state} = req.query
-        const selectSql = 'select a.id, a.title, a.pub_date, a.state, b.name as cate_name from ev_articles a, ev_article_cate b'
-        let sql = selectSql + ' where a.is_deleted=0 and a.cate_id=b.id limit ?, ?'
-        let value = [(pagenum - 1) * pagesize, pagesize]
+        let selectSql = 'select a.id, a.title, a.pub_date, a.state, b.name as cate_name from ev_articles a, ev_article_cate b where a.is_deleted=0 and a.cate_id=b.id'
+        let countSql = 'select count(*) as num from ev_articles a, ev_article_cate b where a.is_deleted=0 and a.cate_id=b.id'
+        let value = []
+        let countValue = []
 
-        if (cate_id && state) {
-            sql = selectSql + ' where a.is_deleted=0 and a.cate_id=b.id and a.cate_id=? and a.state=? limit ?, ?'
-            value = [cate_id, state, (pagenum - 1) * pagesize, pagesize]
+        if (cate_id) {
+            selectSql += ' and a.cate_id=?'
+            value.push(cate_id)
+            countSql += ' and a.cate_id=?'
+            countValue.push(cate_id)
         }
 
-        if (cate_id && !state) {
-            sql = selectSql + ' where a.is_deleted=0 and a.cate_id=b.id and a.cate_id=? limit ?, ?'
-            value = [cate_id, (pagenum - 1) * pagesize, pagesize]
+        if (state) {
+            selectSql += ' and a.state=?'
+            value.push(state)
+            countSql += ' and a.state=?'
+            countValue.push(state)
         }
 
-        if (!cate_id && state) {
-            sql = selectSql + ' where a.is_deleted=0 and a.cate_id=b.id and a.state=? limit ?, ?'
-            value = [state, (pagenum - 1) * pagesize, pagesize]
-        }
+        selectSql += '  limit ?,?'
+        value = value.concat([(pagenum - 1) * pagesize, pagesize])
 
-        repo.getArticleListByPage(sql, value)
-            .then(results => resolve(results))
+        repo.getArticleListByPage(selectSql, value)
+            .then(results => {
+                repo.getArticleCountNumber(countSql, countValue)
+                    .then(count => {
+                        resolve({
+                            list: results,
+                            total: count[0]['num']
+                        })
+                    })
+                    .catch(err => reject(err))
+            })
             .catch(err => reject(err))
     })
 }

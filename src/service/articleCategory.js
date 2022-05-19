@@ -14,6 +14,7 @@ const addArticleCategory = (req) => {
         repo.getCategoryByNameOrAlias(req.body.name, req.body.alias)
             .then(results => {
                 // 使用version做版本控制 设为uq
+                // db.getConnection().beginTransaction(err => {})
                 if (results.length > 0) return reject('category name or alias already exists')
                 repo.insertCategory(req.body)
                     .then(results => {
