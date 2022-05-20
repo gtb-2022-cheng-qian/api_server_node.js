@@ -51,19 +51,22 @@ const getArticleCategory = (req) => {
 
 const updateArticleCategory = (req) => {
     return new Promise((resolve, reject) => {
-        repo.getCategoryByNameOrAliasExceptId(req.body.id, req.body.name, req.body.alias)
+        repo.getCategoryById(req.body.id)
             .then(results => {
-                // 判断
-                if (results.length > 0) return reject('category name or alias already exists')
-                repo.updateCategoryById(req.body, req.body.id)
+                if (results.length !== 1) return reject('cannot update category, because no such category')
+                repo.getCategoryByNameOrAliasExceptId(req.body.id, req.body.name, req.body.alias)
                     .then(results => {
-                        if (results.affectedRows !== 1) return reject('update failed')
-                        resolve(results)
+                        if (results.length > 0) return reject('category name or alias already exists')
+                        repo.updateCategoryById(req.body, req.body.id)
+                            .then(results => {
+                                if (results.affectedRows !== 1) return reject('update failed')
+                                resolve(results)
+                            })
+                            .catch(err => reject(err))
                     })
                     .catch(err => reject(err))
             })
             .catch(err => reject(err))
-
     })
 }
 
