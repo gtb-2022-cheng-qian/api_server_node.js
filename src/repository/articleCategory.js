@@ -21,7 +21,7 @@ const getCategoryById = (id) => {
 }
 
 const getCategoryByNameOrAliasExceptId = (id, name, alias) => {
-    return promisify('select * from ev_article_cate where id<>? and (name=? or alias=?)', [id, name, alias])
+    return promisify('select * from ev_article_cate where is_deleted=0 and id<>? and (name=? or alias=?)', [id, name, alias])
 }
 
 const updateCategoryById = (category, id) => {
