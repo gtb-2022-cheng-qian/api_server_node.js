@@ -94,18 +94,24 @@ const getArticleById = async (req) => {
 
 const editArticleById = (req) => {
     return new Promise((resolve, reject) => {
-        // 手动判断是否上传了文章封面
-        if (!req.file || req.file.fieldname !== 'cover_img') return reject('cover_img is required')
-
-        const articleInfo = {
-            ...req.body,
-            cover_img: path.join('uploads', req.file.filename),
-        }
-
-        repo.updateArticleById(articleInfo, req.body.id)
+        articleCategoryRepo.getCategoryById(req.body.cate_id)
             .then(results => {
-                if (results.affectedRows !== 1) return reject('article edit failed')
-                resolve(results)
+                if (results.length !== 1) return reject('cannot add the book, because no such category')
+
+                // 手动判断是否上传了文章封面
+                if (!req.file || req.file.fieldname !== 'cover_img') return reject('cover_img is required')
+
+                const articleInfo = {
+                    ...req.body,
+                    cover_img: path.join('uploads', req.file.filename),
+                }
+
+                repo.updateArticleById(articleInfo, req.body.id)
+                    .then(results => {
+                        if (results.affectedRows !== 1) return reject('article edit failed')
+                        resolve(results)
+                    })
+                    .catch(err => reject(err))
             })
             .catch(err => reject(err))
     })
