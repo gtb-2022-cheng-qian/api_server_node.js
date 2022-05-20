@@ -17,7 +17,7 @@ const markArticleAsDeletedById = (id) => {
 }
 
 const getArticleById = (id) => {
-    return promisify('select * from ev_articles where id = ?', [id])
+    return promisify('select * from ev_articles where is_deleted = 0 and id = ?', [id])
 }
 
 const updateArticleById = (articleInfo, id) => {
