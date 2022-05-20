@@ -53,7 +53,7 @@ const updateArticleCategory = (req) => {
     return new Promise((resolve, reject) => {
         repo.getCategoryById(req.body.id)
             .then(results => {
-                if (results.length !== 1) return reject('cannot update category, because no such category')
+                if (results.length !== 1) return reject('cannot update category, because the category is not existing')
                 repo.getCategoryByNameOrAliasExceptId(req.body.id, req.body.name, req.body.alias)
                     .then(results => {
                         if (results.length > 0) return reject('category name or alias already exists')

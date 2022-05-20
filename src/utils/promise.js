@@ -1,6 +1,5 @@
 import db from "../../db/index.js"
 
-// promisify
 const promisify = (sql, value) => {
     return new Promise((resolve, reject) => {
         db.query(sql, value, (err, results) => {
