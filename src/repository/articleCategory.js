@@ -5,7 +5,7 @@ const getAllCategories = () => {
 }
 
 const getCategoryByNameOrAlias = (name, alias) => {
-    return promisify('select * from ev_article_cate where name=? or alias=?', [name, alias])
+    return promisify('select * from ev_article_cate where is_deleted=0 and (name=? or alias=?)', [name, alias])
 }
 
 const insertCategory = (category) => {
