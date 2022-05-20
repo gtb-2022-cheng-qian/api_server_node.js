@@ -1,22 +1,29 @@
 import path from "path"
 import repo from "../repository/article.js"
+import articleCategoryRepo from "../repository/articleCategory.js"
 
 const addNewArticle = (req) => {
     return new Promise((resolve, reject) => {
-        // 手动判断是否上传了文章封面
-        if (!req.file || req.file.fieldname !== 'cover_img') return reject('cover_img is required')
+        articleCategoryRepo.getCategoryById(req.body.cate_id)
+            .then(results => {
+                if (results.length !== 1) return reject('cannot add the book, because no such category')
 
-        const articleInfo = {
-            ...req.body,
-            cover_img: path.join('uploads', req.file.filename),
-            pub_date: new Date(),
-            author_id: req.user.id
-        }
+                // 手动判断是否上传了文章封面
+                if (!req.file || req.file.fieldname !== 'cover_img') return reject('cover_img is required')
 
-        repo.insertArticle(articleInfo)
-            .then((results) => {
-                if (results.affectedRows !== 1) return reject('article add failed')
-                resolve(results)
+                const articleInfo = {
+                    ...req.body,
+                    cover_img: path.join('uploads', req.file.filename),
+                    pub_date: new Date(),
+                    author_id: req.user.id
+                }
+
+                repo.insertArticle(articleInfo)
+                    .then((results) => {
+                        if (results.affectedRows !== 1) return reject('article add failed')
+                        resolve(results)
+                    })
+                    .catch(err => reject(err))
             })
             .catch(err => reject(err))
     })
