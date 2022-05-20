@@ -17,7 +17,7 @@ const markCategoryDeletedById = (id) => {
 }
 
 const getCategoryById = (id) => {
-    return promisify('select * from ev_article_cate where id=?', [id])
+    return promisify('select * from ev_article_cate where is_deleted=0 and id=?', [id])
 }
 
 const getCategoryByNameOrAliasExceptId = (id, name, alias) => {
