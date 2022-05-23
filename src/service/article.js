@@ -31,33 +31,9 @@ const addNewArticle = (req) => {
 
 const getAllArticle = (req) => {
     return new Promise((resolve, reject) => {
-        // change sql query + total count
-        const {pagenum, pagesize, cate_id, state} = req.query
-        let selectSql = 'select a.id, a.title, a.pub_date, a.state, b.name as cate_name from ev_articles a, ev_article_cate b where a.is_deleted=0 and a.cate_id=b.id'
-        let countSql = 'select count(*) as num from ev_articles a, ev_article_cate b where a.is_deleted=0 and a.cate_id=b.id'
-        let value = []
-        let countValue = []
-
-        if (cate_id) {
-            selectSql += ' and a.cate_id=?'
-            value.push(cate_id)
-            countSql += ' and a.cate_id=?'
-            countValue.push(cate_id)
-        }
-
-        if (state) {
-            selectSql += ' and a.state=?'
-            value.push(state)
-            countSql += ' and a.state=?'
-            countValue.push(state)
-        }
-
-        selectSql += '  limit ?,?'
-        value = value.concat([(pagenum - 1) * pagesize, pagesize])
-
-        repo.getArticleListByPage(selectSql, value)
+        repo.getArticleListByPage(req)
             .then(results => {
-                repo.getArticleCountNumber(countSql, countValue)
+                repo.getArticleCountNumber(req)
                     .then(count => {
                         resolve({
                             list: results,
