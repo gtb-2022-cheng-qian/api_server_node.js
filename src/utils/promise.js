@@ -1,4 +1,5 @@
 import db from "../../db/index.js"
+import {DatabaseError} from "../exception/ApplicationError.js";
 
 const promisify = (sql, value) => {
     return new Promise((resolve, reject) => {
@@ -6,6 +7,8 @@ const promisify = (sql, value) => {
             if (err) return reject('sql error')
             resolve(results)
         })
+    }).catch(err => {
+        throw new DatabaseError(err)
     })
 }
 
