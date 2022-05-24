@@ -11,6 +11,7 @@ import multer from "multer"
 import config from '../config.js'
 // 导入路由模块
 import router from "./routers/index.js"
+import {NotFoundError, BadRequestError, DatabaseError} from "./exception/ApplicationError.js";
 
 // 创建 express 的服务器实例
 const app = express()
@@ -30,12 +31,16 @@ app.use('/', router)
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
+    console.log(err)
     // 数据验证失败
-    if (err instanceof joi.ValidationError) res.status(400).send({message: 'data validation failed'})
+    if (err instanceof joi.ValidationError) return res.status(400).send({message: 'data validation failed'})
     // 身份认证失败
-    if (err instanceof expressJwt.UnauthorizedError) res.status(401).send({message: 'identity authentication failed'})
+    if (err instanceof expressJwt.UnauthorizedError) return res.status(401).send({message: 'identity authentication failed'})
     // 图片上传失败
-    if (err instanceof multer.MulterError) res.status(400).send({message: 'image upload failed'})
+    if (err instanceof multer.MulterError) return res.status(400).send({message: 'image upload failed'})
+    // 其他错误
+    if (err instanceof NotFoundError) return res.status(404).send({message: err.message})
+    if (err instanceof BadRequestError || err instanceof DatabaseError) return res.status(500).send({message: err.message})
 })
 
 // 调用 app.listen 方法，指定端口号并启动web服务器
