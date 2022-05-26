@@ -1,33 +1,28 @@
 import service from '../service/articleCategory.js'
 
 const getArticleCategory = (req, res) => {
-    service.getCategoryList()
+    return service.getCategoryList()
         .then(results => res.status(200).send({message: 'query success', data: results}))
-        .catch(err => res.status(500).send({message: err}))
 };
 
 const postArticleCategory = (req, res) => {
-    service.addArticleCategory(req)
+    return service.addArticleCategory(req)
         .then(() => res.status(201).send({message: 'insert success'}))
-        .catch(err => res.status(500).send({message: err}))
 }
 
 const deleteArticleCategoryById = (req, res) => {
-    service.deleteArticleCategory(req)
+    return service.deleteArticleCategory(req)
         .then(() => res.status(200).send({message: 'delete success'}))
-        .catch(err => res.status(500).send({message: err}))
 }
 
 const getArticleCategoryById = (req, res) => {
-    service.getArticleCategory(req)
+    return service.getArticleCategory(req)
         .then(result => res.status(200).send({message: 'query success', data: result}))
-        .catch(err => res.status(500).send({message: err}))
 }
 
 const updateArticleCategoryById = (req, res) => {
-    service.updateArticleCategory(req)
+    return service.updateArticleCategory(req)
         .then(() => res.status(201).send({message: 'update success'}))
-        .catch(err => res.status(500).send({message: err}))
 }
 
 export default {
