@@ -5,7 +5,7 @@ import expressJoi from "@escook/express-joi"
 import {update_schema, updatePwd_schema, updateAvatar_schema} from "../schema/user.js"
 //导入用户信息处理函数模块
 import userInfoController from "../controller/userInfo.js"
-import {routeHandler} from "../utils/routeHandler";
+import {routeHandler} from "../utils/routeHandler.js"
 
 const router = express.Router()
 

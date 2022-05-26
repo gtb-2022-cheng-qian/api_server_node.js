@@ -25,7 +25,7 @@ const editArticle = (req, res) => {
         .then(() => res.status(201).send({message: 'article edit success'}))
 }
 
-export {
+export default {
     addArticle,
     getArticleList,
     deleteArticle,
