@@ -27,9 +27,10 @@ const addNewArticle = (req) => {
 }
 
 const getAllArticle = (req) => {
-    return repo.getArticleListByPage(req)
+    const {pagenum, pagesize, cate_id, state} = req.query
+    return repo.getArticleListByPage(pagenum, pagesize, cate_id, state)
         .then(results => {
-            return repo.getArticleCountNumber(req)
+            return repo.getArticleCountNumber(cate_id, state)
                 .then(count => {
                     return {
                         list: results,

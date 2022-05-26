@@ -1,5 +1,6 @@
 import repo from '../repository/articleCategory.js'
-import {BadRequestError, ConflictError, NotFoundError} from "../exception/ApplicationError.js";
+import articleRepo from '../repository/article.js'
+import {BadRequestError, ConflictError, NotFoundError} from "../exception/ApplicationError.js"
 
 const getCategoryList = () => {
     return repo.getAllCategories()
@@ -21,10 +22,14 @@ const addArticleCategory = (req) => {
 }
 
 const deleteArticleCategory = (req) => {
-    return repo.markCategoryDeletedById(req.params.id)
-        .then(results => {
-            if (results.affectedRows !== 1) throw new BadRequestError('delete failed')
-            return results
+    return articleRepo.getArticleCountNumber(req.params.id, undefined)
+        .then(count=>{
+            if (count[0]['num']>0) throw new ConflictError('cannot delete a category with books')
+            return repo.markCategoryDeletedById(req.params.id)
+                .then(results => {
+                    if (results.affectedRows !== 1) throw new BadRequestError('delete failed')
+                    return results
+                })
         })
 }
 
