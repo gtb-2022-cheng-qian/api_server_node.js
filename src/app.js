@@ -11,7 +11,7 @@ import multer from "multer"
 import config from '../config.js'
 // 导入路由模块
 import router from "./routers/index.js"
-import {NotFoundError, BadRequestError, DatabaseError} from "./exception/ApplicationError.js";
+import {NotFoundError, BadRequestError, DatabaseError, ConflictError} from "./exception/ApplicationError.js";
 
 // 创建 express 的服务器实例
 const app = express()
@@ -41,6 +41,7 @@ app.use((err, req, res, next) => {
     // 其他错误
     if (err instanceof NotFoundError) return res.status(404).send({message: err.message})
     if (err instanceof BadRequestError || err instanceof DatabaseError) return res.status(500).send({message: err.message})
+    if (err instanceof ConflictError) return res.status(409).send({message: err.message})
 })
 
 // 调用 app.listen 方法，指定端口号并启动web服务器
