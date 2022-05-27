@@ -12,4 +12,4 @@ const db = mysql.createPool({
 })
 
 // 导出连接
-export default db;
+export default db
