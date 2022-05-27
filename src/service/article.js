@@ -2,9 +2,10 @@ import path from "path"
 import repo from "../repository/article.js"
 import articleCategoryRepo from "../repository/articleCategory.js"
 import {NotFoundError, BadRequestError} from "../exception/ApplicationError.js"
-import config from "../../config.js";
+import config from "../../config.js"
 
 const postImage = (req) => {
+    // 手动判断是否上传了文章封面
     if (!req.file || req.file.fieldname !== 'cover_img') throw new NotFoundError('cover_img is required')
     return 'http://' + config.hostname + ':' + config.port + '/api/article/image/' + req.file.path.split(/(\d{4}-\d{2}-\d{2}.*)/)[1]
 }
@@ -14,12 +15,8 @@ const addNewArticle = (req) => {
         .then(results => {
             if (results.length !== 1) throw new NotFoundError('cannot add the article, because no such category')
 
-            // 手动判断是否上传了文章封面
-            if (!req.file || req.file.fieldname !== 'cover_img') throw new NotFoundError('cover_img is required')
-
             const articleInfo = {
                 ...req.body,
-                cover_img: path.join('uploads', req.file.filename),
                 pub_date: new Date(),
                 author_id: req.user.id
             }

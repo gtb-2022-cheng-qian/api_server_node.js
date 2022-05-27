@@ -19,7 +19,7 @@ const router = express.Router()
  将文本类型的数据，解析并挂载到 req.body 属性中
 */
 router.post('/upload/image', upload.single('cover_img'), articleController.uploadImage)
-router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), routeHandler(articleController.addArticle))
+router.post('/add', expressJoi(add_article_schema), routeHandler(articleController.addArticle))
 router.get('/list', expressJoi(get_articles_schema), routeHandler(articleController.getArticleList))
 router.get('/delete/:id', expressJoi(delete_article_schema), routeHandler(articleController.deleteArticle))
 router.get('/detail/:id', expressJoi(get_articlesById_schema), routeHandler(articleController.getSingleArticle))
