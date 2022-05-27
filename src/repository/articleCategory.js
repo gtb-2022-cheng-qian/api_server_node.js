@@ -1,4 +1,4 @@
-import promisify from "../utils/promise.js"
+import promisify from '../utils/promise.js'
 
 const getAllCategories = () => {
     return promisify('select * from ev_article_cate where is_deleted=0 order by id asc')

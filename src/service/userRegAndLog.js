@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 // 导入 config 模块
 import config from '../../config.js'
 import repo from '../repository/userRegAndLog.js'
-import {BadRequestError, ConflictError, NotFoundError} from "../exception/ApplicationError.js"
+import {BadRequestError, ConflictError, NotFoundError} from '../exception/ApplicationError.js'
 
 /*
  注册 步骤：

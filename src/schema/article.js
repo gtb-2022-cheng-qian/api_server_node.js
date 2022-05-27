@@ -1,4 +1,4 @@
-import joi from "joi"
+import joi from 'joi'
 
 // 通过 express-joi 自动验证 req.body 中的文本数据；通过 if 判断手动验证 req.file 中的文件数据
 export const add_article_schema = {

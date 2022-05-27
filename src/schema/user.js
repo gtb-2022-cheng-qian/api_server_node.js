@@ -3,7 +3,7 @@
 // 安装 joi 包，为表单中携带的每个数据项，定义验证规则
 // 安装 @escook/express-joi 中间件，来实现自动对表单数据进行验证的功能
 
-import joi from "joi"
+import joi from 'joi'
 
 // 导出注册和登陆表单的验证规则对象
 export const reg_login_schema = {

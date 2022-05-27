@@ -1,13 +1,13 @@
 // 在项目根目录中，新建 routers 文件夹，用来存放所有的路由模块
 
-import express from "express"
+import express from 'express'
 // 导入用户路由处理函数
-import userController from "../controller/userRegAndLog.js"
+import userController from '../controller/userRegAndLog.js'
 // 导入验证表单数据的中间件
-import expressJoi from "@escook/express-joi"
+import expressJoi from '@escook/express-joi'
 // 导入验证规则对象
-import {reg_login_schema} from "../schema/user.js"
-import {routeHandler} from "../utils/routeHandler.js"
+import {reg_login_schema} from '../schema/user.js'
+import {routeHandler} from '../utils/routeHandler.js'
 
 // 创建路由对象
 const router = express.Router()

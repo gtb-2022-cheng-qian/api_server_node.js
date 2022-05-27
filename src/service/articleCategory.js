@@ -1,6 +1,6 @@
 import repo from '../repository/articleCategory.js'
 import articleRepo from '../repository/article.js'
-import {BadRequestError, ConflictError, NotFoundError} from "../exception/ApplicationError.js"
+import {BadRequestError, ConflictError, NotFoundError} from '../exception/ApplicationError.js'
 
 const getCategoryList = () => {
     return repo.getAllCategories()

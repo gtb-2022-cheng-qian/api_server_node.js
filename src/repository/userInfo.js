@@ -1,4 +1,4 @@
-import promisify from "../utils/promise.js"
+import promisify from '../utils/promise.js'
 
 const getUserInfoById = (id) => {
     return promisify('select id, username, nickname, email, user_pic from ev_users where id=?', [id])

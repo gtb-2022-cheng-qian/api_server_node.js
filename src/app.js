@@ -10,8 +10,8 @@ import multer from "multer"
 // 导入config模块
 import config from '../config.js'
 // 导入路由模块
-import router from "./routers/index.js"
-import {NotFoundError, BadRequestError, DatabaseError, ConflictError} from "./exception/ApplicationError.js";
+import router from './routers/index.js'
+import {NotFoundError, BadRequestError, DatabaseError, ConflictError} from './exception/ApplicationError.js'
 
 // 创建 express 的服务器实例
 const app = express()

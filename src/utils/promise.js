@@ -1,5 +1,5 @@
-import db from "../../db/index.js"
-import {DatabaseError} from "../exception/ApplicationError.js";
+import db from '../../db/index.js'
+import {DatabaseError} from '../exception/ApplicationError.js'
 
 const promisify = (sql, value) => {
     return new Promise((resolve, reject) => {

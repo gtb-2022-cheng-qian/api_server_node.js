@@ -1,4 +1,4 @@
-import promisify from "../utils/promise.js"
+import promisify from '../utils/promise.js'
 
 const getUserInfoByUsername = (username) => {
     return promisify('select * from ev_users where username=?', [username])

@@ -1,8 +1,8 @@
-import express from "express"
-import userRouter from "./userRegAndLog.js"
-import userInfoRouter from "./userInfo.js"
-import articleCategoryRouter from "./articleCategory.js"
-import articleRouter from "./article.js"
+import express from 'express'
+import userRouter from './userRegAndLog.js'
+import userInfoRouter from './userInfo.js'
+import articleCategoryRouter from './articleCategory.js'
+import articleRouter from './article.js'
 
 const router = express.Router()
 

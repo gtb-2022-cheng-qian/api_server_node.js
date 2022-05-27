@@ -1,7 +1,7 @@
 // 导入加密模块
-import bcrypt from "bcryptjs"
-import repo from "../repository/userInfo.js"
-import {BadRequestError, ConflictError, NotFoundError} from "../exception/ApplicationError.js"
+import bcrypt from 'bcryptjs'
+import repo from '../repository/userInfo.js'
+import {BadRequestError, ConflictError, NotFoundError} from '../exception/ApplicationError.js'
 
 // 获取用户基本信息的处理函数
 const getBasicUserInfo = (req) => {

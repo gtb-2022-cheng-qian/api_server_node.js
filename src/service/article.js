@@ -1,7 +1,7 @@
-import repo from "../repository/article.js"
-import articleCategoryRepo from "../repository/articleCategory.js"
-import {BadRequestError, NotFoundError} from "../exception/ApplicationError.js"
-import config from "../../config.js"
+import repo from '../repository/article.js'
+import articleCategoryRepo from '../repository/articleCategory.js'
+import {BadRequestError, NotFoundError} from '../exception/ApplicationError.js'
+import config from '../../config.js'
 
 const postImage = (req) => {
     // 手动判断是否上传了文章封面

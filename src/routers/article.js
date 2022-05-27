@@ -1,15 +1,15 @@
-import express from "express"
-import expressJoi from "@escook/express-joi"
+import express from 'express'
+import expressJoi from '@escook/express-joi'
 import {
     add_article_schema,
     delete_article_schema,
     edit_article_schema,
     get_articles_schema,
     get_articlesById_schema
-} from "../schema/article.js"
-import articleController from "../controller/article.js"
-import upload from "../utils/uploadImage.js"
-import {routeHandler} from "../utils/routeHandler.js"
+} from '../schema/article.js'
+import articleController from '../controller/article.js'
+import upload from '../utils/uploadImage.js'
+import {routeHandler} from '../utils/routeHandler.js'
 
 const router = express.Router()
 

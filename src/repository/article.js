@@ -1,4 +1,4 @@
-import promisify from "../utils/promise.js"
+import promisify from '../utils/promise.js'
 
 const insertArticle = (articleInfo) => {
     return promisify('insert into ev_articles set ?', [articleInfo])

@@ -1,8 +1,8 @@
-import path from "path"
-import fs from "fs"
+import path from 'path'
+import fs from 'fs'
 // 注意：使用 express.urlencoded() 中间件无法解析 multipart/form-data 格式的请求体数据。
 // 当前项目，推荐使用 multer 来解析 multipart/form-data 格式的表单数据。
-import multer from "multer"
+import multer from 'multer'
 
 function CreateDate() {
     let year = new Date().getFullYear()
@@ -10,7 +10,7 @@ function CreateDate() {
     let day = new Date().getDate()
     if (month < 10) month = '0' + month
     if (day < 10) day = '0' + day
-    return year + "-" + month + "-" + day;
+    return year + '-' + month + '-' + day
 }
 
 const storage = () => {
