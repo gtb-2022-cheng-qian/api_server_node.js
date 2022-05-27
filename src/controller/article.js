@@ -1,5 +1,10 @@
 import service from '../service/article.js'
 
+const uploadImage = (req, res) => {
+    const imageUrl = service.postImage(req, res)
+    return res.status(201).send({message: 'image upload success', url: imageUrl})
+}
+
 const addArticle = (req, res) => {
     return service.addNewArticle(req)
         .then(() => res.status(201).send({message: 'article add success'}))
@@ -30,5 +35,6 @@ export default {
     getArticleList,
     deleteArticle,
     getSingleArticle,
-    editArticle
+    editArticle,
+    uploadImage
 }

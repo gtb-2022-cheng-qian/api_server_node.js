@@ -4,8 +4,17 @@ import fs from "fs"
 // 当前项目，推荐使用 multer 来解析 multipart/form-data 格式的表单数据。
 import multer from "multer"
 
+function CreateDate() {
+    let year = new Date().getFullYear()
+    let month = new Date().getMonth() + 1
+    let day = new Date().getDate()
+    if (month < 10) month = '0' + month
+    if (day < 10) day = '0' + day
+    return year + "-" + month + "-" + day;
+}
+
 const storage = () => {
-    const date = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate()
+    const date = CreateDate();
     const dir = path.join(path.resolve(), `./uploads/${date}`)
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)

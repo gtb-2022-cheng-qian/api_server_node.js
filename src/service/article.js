@@ -2,6 +2,12 @@ import path from "path"
 import repo from "../repository/article.js"
 import articleCategoryRepo from "../repository/articleCategory.js"
 import {NotFoundError, BadRequestError} from "../exception/ApplicationError.js"
+import config from "../../config.js";
+
+const postImage = (req) => {
+    if (!req.file || req.file.fieldname !== 'cover_img') throw new NotFoundError('cover_img is required')
+    return 'http://' + config.hostname + ':' + config.port + '/api/article/image/' + req.file.path.split(/(\d{4}-\d{2}-\d{2}.*)/)[1]
+}
 
 const addNewArticle = (req) => {
     return articleCategoryRepo.getCategoryById(req.body.cate_id)
@@ -86,5 +92,6 @@ export default {
     getAllArticle,
     deleteArticleById,
     getArticleById,
-    editArticleById
+    editArticleById,
+    postImage
 }
