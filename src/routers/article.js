@@ -23,6 +23,6 @@ router.post('/add', expressJoi(add_article_schema), routeHandler(articleControll
 router.get('/list', expressJoi(get_articles_schema), routeHandler(articleController.getArticleList))
 router.get('/delete/:id', expressJoi(delete_article_schema), routeHandler(articleController.deleteArticle))
 router.get('/detail/:id', expressJoi(get_articlesById_schema), routeHandler(articleController.getSingleArticle))
-router.post('/edit', upload.single('cover_img'), expressJoi(edit_article_schema), routeHandler(articleController.editArticle))
+router.post('/edit', expressJoi(edit_article_schema), routeHandler(articleController.editArticle))
 
 export default router

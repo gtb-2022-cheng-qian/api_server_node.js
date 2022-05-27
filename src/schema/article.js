@@ -38,6 +38,7 @@ export const edit_article_schema = {
         title: joi.string().required(),
         cate_id: joi.number().integer().min(1).required(),
         content: joi.string().required().allow(''),
-        state: joi.string().valid('published', 'draft').required()
+        state: joi.string().valid('published', 'draft').required(),
+        cover_img: joi.string().required()
     }
 }
