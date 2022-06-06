@@ -5,7 +5,7 @@ import config from '../../config.js'
 
 const postImage = (req) => {
     // 手动判断是否上传了文章封面
-    if (!req.file || req.file.fieldname !== 'cover_img') throw new NotFoundError('cover_img is required')
+    if (!req.file || req.file.fieldname !== 'cover_img') throw new NotFoundError('cover_img is required', 'conflict')
     return 'http://' + config.hostname + ':' + config.port + '/api/article/image/' + req.file.path.split(/(\d{4}-\d{2}-\d{2}.*)/)[1]
 }
 

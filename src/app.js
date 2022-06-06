@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.urlencoded({extended: false}))
 //配置将jwt字符串解析为json对象的中间件
 //只要成功配置express-jwt中间件，就可以把解析出来的用户信息挂载到req.user
-app.use(expressJwt({secret: config.jwtSecretKey}).unless({path: [/^\/api\/user\//]}))
+app.use(expressJwt({secret: config.jwtSecretKey}).unless({path: [/^\/api\/user\//, /^\/api\/article\/image\//]}))
 // 分享静态资源
 app.use('/api/article/image', express.static('uploads'))
 
@@ -31,7 +31,6 @@ app.use('/', router)
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
-    console.log(err)
     // 数据验证失败
     if (err instanceof joi.ValidationError) return res.status(400).send({message: 'data validation failed'})
     // 身份认证失败
@@ -39,9 +38,8 @@ app.use((err, req, res, next) => {
     // 图片上传失败
     if (err instanceof multer.MulterError) return res.status(400).send({message: 'image upload failed'})
     // 其他错误
-    if (err instanceof NotFoundError) return res.status(404).send({message: err.message})
+    if (err instanceof NotFoundError || err instanceof ConflictError) return res.status(400).send({message: err.message})
     if (err instanceof BadRequestError || err instanceof DatabaseError) return res.status(500).send({message: err.message})
-    if (err instanceof ConflictError) return res.status(409).send({message: err.message})
 })
 
 // 调用 app.listen 方法，指定端口号并启动web服务器
