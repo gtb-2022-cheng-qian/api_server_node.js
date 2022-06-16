@@ -12,6 +12,7 @@ import config from '../config.js'
 // 导入路由模块
 import router from './routers/index.js'
 import {NotFoundError, BadRequestError, DatabaseError, ConflictError} from './exception/ApplicationError.js'
+import path from "path";// CWD PWD
 
 // 创建 express 的服务器实例
 const app = express()
@@ -24,7 +25,7 @@ app.use(express.urlencoded({extended: false}))
 //只要成功配置express-jwt中间件，就可以把解析出来的用户信息挂载到req.user
 app.use(expressJwt({secret: config.jwtSecretKey}).unless({path: [/^\/api\/user\//, /^\/api\/article\/image\//]}))
 // 分享静态资源
-app.use('/api/article/image', express.static('uploads'))
+app.use('/api/article/image', express.static(path.join( '/src/uploads')))
 
 // 配置路由
 app.use('/', router)

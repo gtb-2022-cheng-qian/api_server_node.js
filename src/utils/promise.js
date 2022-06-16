@@ -4,7 +4,7 @@ import {DatabaseError} from '../exception/ApplicationError.js'
 const promisify = (sql, value) => {
     return new Promise((resolve, reject) => {
         db.query(sql, value, (err, results) => {
-            if (err) return reject('sql error')
+            if (err) return reject(err)
             resolve(results)
         })
     }).catch(err => {

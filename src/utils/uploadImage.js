@@ -14,8 +14,8 @@ function CreateDate() {
 }
 
 const storage = () => {
-    const date = CreateDate();
-    const dir = path.join(path.resolve(), `./uploads/${date}`)
+    const date = CreateDate()
+    const dir = path.join(process.cwd(), `/src/uploads/${date}`)
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir)
     }
