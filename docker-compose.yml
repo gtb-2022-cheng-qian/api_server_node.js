@@ -8,15 +8,13 @@ services:
       context: .
     ports:
       - 8081:8080 # port on host, port on container 绑定容器端口到主机端口
-    env_file:
-      - ./.env
     environment:
-        - DB_HOST=$MYSQLDB_HOST
-        - DB_USER=$MYSQLDB_USER
-        - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-        - DB_NAME=$MYSQLDB_DATABASE
-        - PORT=$APP_PORT
-        - HOST=$APP_HOST
+        - DB_HOST=172.23.0.2
+        - DB_USER=root
+        - DB_PASSWORD=72641218
+        - DB_NAME=my_dd_01
+        - PORT=8080
+        - HOST=127.0.0.1
     networks:
         api_server_default:
             ipv4_address: 172.23.0.3
@@ -25,11 +23,9 @@ services:
     image: mysql:5.7.38
     ports:
       - 3309:3307 # 此处的端口mapping对于app和mysql的连接无意义，因为app容器与mysqldb容器是通过network通讯，而不是通过端口映射
-    env_file:
-      - ./.env
     environment:
-        - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-        - MYSQL_DATABASE=$MYSQLDB_DATABASE
+        - MYSQL_ROOT_PASSWORD=72641218
+        - MYSQL_DATABASE=my_dd_01
     volumes:
       - db:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
